@@ -255,10 +255,7 @@
 					var value = el.val();
 					var name = $('div.jq-file__name', file);
 
-					// чтобы при динамическом изменении имя файла не сбрасывалось
-					if (value) name.text(value.replace(/.+[\\\/]/, ''));
-
-					el.on('change.styler', function() {
+					var refreshFileInput = function() {
 						var value = el.val();
 						if (el.is('[multiple]')) {
 							value = '';
@@ -277,7 +274,10 @@
 						} else {
 							file.addClass('changed');
 						}
-					})
+					}
+					refreshFileInput();
+
+					el.on('change.styler', refreshFileInput)
 					.on('focus.styler', function() {
 						file.addClass('focused');
 					})
@@ -287,7 +287,6 @@
 					.on('click.styler', function() {
 						file.removeClass('focused');
 					});
-
 				}; // end fileOutput()
 
 				fileOutput();
